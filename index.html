@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Moja Strona - Hobby Fotografia</title>
+<style>
+  /* Reset */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #222;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  header {
+    background: #2c3e50;
+    color: white;
+    padding: 20px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  header .logo {
+    width: 50px;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  nav ul li a:hover,
+  nav ul li a:focus {
+    background-color: #34495e;
+  }
+  #theme-toggle {
+    background: #34495e;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+  #theme-toggle:hover {
+    background-color: #1abc9c;
+  }
+  main {
+    flex: 1;
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 2.4rem;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  h2 {
+    font-size: 1.8rem;
+    margin: 20px 0 10px;
+    color: #2c3e50;
+  }
+  section {
+    margin-bottom: 40px;
+  }
+  article p {
+    margin: 12px 0 18px;
+    font-size: 1.1rem;
+    color: #444;
+  }
+  .gallery {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .gallery-item {
+    max-width: 200px;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .gallery-item:hover,
+  .gallery-item:focus {
+    transform: scale(1.1);
+    outline: none;
+  }
+  form {
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  label {
+    font-weight: 600;
+  }
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
+    resize: vertical;
+    transition: border-color 0.3s ease;
+  }
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  textarea:focus {
+    border-color: #1abc9c;
+    outline: none;
+  }
+  button[type="submit"] {
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+  }
+  button[type="submit"]:hover {
+    background-color: #1abc9c;
+  }
+  footer {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+  }
+  footer a {
+    color: #1abc9c;
+    text-decoration: none;
+  }
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  /* Dark mode */
+  body.dark-mode {
+    background-color: #121212;
+    color: #ddd;
+  }
+  body.dark-mode header {
+    background-color: #1a1a1a;
+  }
+  body.dark-mode nav ul li a {
+    color: #ddd;
+  }
+  body.dark-mode nav ul li a:hover,
+  body.dark-mode nav ul li a:focus {
+    background-color: #333;
+  }
+  body.dark-mode #theme-toggle {
+    background-color: #333;
+    color: #ddd;
+  }
+  body.dark-mode #theme-toggle:hover {
+    background-color: #1abc9c;
+    color: #121212;
+  }
+  body.dark-mode input,
+  body.dark-mode textarea {
+    background-color: #222;
+    border-color: #555;
+    color: #eee;
+  }
+  body.dark-mode input:focus,
+  body.dark-mode textarea:focus {
+    border-color: #1abc9c;
+  }
+  body.dark-mode footer {
+    background-color: #1a1a1a;
+  }
+
+  /* Modal for image */
+  #modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+    z-index: 9999;
+  }
+  #modal img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 10px;
+    box-shadow: 0 0 20px white;
+  }
+</style>
+</head>
+<body>
+<header>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Photographic_camera_icon.svg/120px-Photographic_camera_icon.svg.png" alt="Logo fotograficzne" class="logo" />
+  <nav>
+    <ul>
+      <li><a href="#home" tabindex="1">Strona Główna</a></li>
+      <li><a href="#gallery" tabindex="2">Galeria</a></li>
+      <li><a href="#about" tabindex="3">O Mnie</a></li>
+      <li><a href="#contact" tabindex="4">Kontakt</a></li>
+    </ul>
+  </nav>
+  <button id="theme-toggle" aria-pressed="false" aria-label="Przełącz motyw jasny/ciemny" tabindex="5">Zmień motyw</button>
+</header>
+
+<main>
+  <section id="home">
+    <h1>Witaj na mojej stronie o fotografii!</h1>
+    <p>Fotografia to nie tylko hobby, to sposób na zatrzymanie chwili, która już nigdy nie powtórzy się w ten sam sposób. Przez obiektyw aparatu odkrywam świat na nowo.</p>
+  </section>
+
+  <section id="gallery" aria-label="Galeria zdjęć">
+    <h2>Galeria</h2>
+    <p>Zobacz wybrane zdjęcia z mojej kolekcji. Kliknij na zdjęcie, aby je powiększyć.</p>
+    <div class="gallery" role="list">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/1/16/Polish_State_Railways_ET22-1129_wagon_pociag.jpg" 
+           alt="Pociąg na stacji kolejowej" class="gallery-item" tabindex="6" onclick="enlargeImage(this)" />
+      <img src="https://picsum.photos/id/1019/300/200" alt="Zachód słońca nad morzem z plażą" class="gallery-item" tabindex="7" onclick="enlargeImage(this)" />
+      <img src="https://picsum.photos/id/1021/300/200" alt="Leśna ścieżka wśród drzew" class="gallery-item" tabindex="8" onclick="enlargeImage(this)" />
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>O mnie</h2>
+    <article>
+      <p>Nazywam się Kacper i jestem pasjonatem fotografii. Uwielbiam łapać naturalne chwile i eksperymentować z różnymi technikami fotograficznymi.</p>
+      <p>Fotografia pozwala mi wyrazić siebie i dzielić się z innymi pięknem otaczającego świata.</p>
+      <aside>
+        <h3>Moje ulubione sprzęty:</h3>
+        <ul>
+          <li>Aparat Canon EOS R6</li>
+          <li>Obiektyw 24-70mm f/2.8</li>
+          <li>Statyw Manfrotto</li>
+          <li>Filtry ND i polaryzacyjne</li>
+        </ul>
+      </aside>
+    </article>
+  </section>
+
+  <section id="contact" aria-label="Formularz kontaktowy">
+
